@@ -3,49 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Responsive Dual Image</title>
+    <title>Terminal Access System - Responsive Image</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* TUS CLASES CSS MANTENIDAS */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .login-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 10, 24, 0.29);
+            backdrop-filter: blur(12px);
+            z-index: 100005;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            border-radius: 4px;
+            transform: translateY(20px);
+            transition: 0.3s;
+        }
+
+        .login-overlay.active .login-card {
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body class="bg-black overflow-hidden">
 
-    <!-- Contenedor de Imagen Inteligente -->
-    <div class="fixed inset-0 -z-10 bg-black flex items-center justify-center">
+    <div class="fixed inset-0 -z-10 bg-black flex items-center justify-center cursor-pointer" onclick="openLogin()">
+        
         <picture class="w-full h-full">
-            <!-- Imagen para Escritorio (Pantallas de más de 640px) -->
-            <source media="(min-width: 640px)" 
-                    srcset="pp.png">
+            <source media="(min-width: 641px)" srcset="pp.png">
             
-            <!-- Imagen para Móvil (Pantallas pequeñas, formato vertical sugerido) -->
             <img src="ppr.png" 
-                 alt="Background" 
+                 alt="Fondo Terminal" 
                  class="w-full h-full object-contain">
         </picture>
+        
     </div>
 
-    <!-- Contenedor del Login -->
-    <main class="min-h-screen w-full flex items-center justify-center p-4">
-        
-        <div class="bg-white/95 backdrop-blur-sm w-full max-w-[90%] sm:max-w-md p-6 sm:p-10 rounded-3xl shadow-2xl border border-gray-200">
-            
-            <div class="text-center mb-8">
-                <h2 class="text-2xl sm:text-3xl font-black text-gray-800 tracking-tight">Acceso</h2>
-                <p class="text-sm text-gray-500 mt-2">Diferente imagen en móvil y PC</p>
+    <div id="login-modal" class="login-overlay" onclick="closeLogin(event)">
+        <div class="login-card" onclick="event.stopPropagation()">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4 text-slate-900">
+                <i class="material-icons text-[#003399]">security</i>
+                <h2 class="font-black uppercase text-xl italic tracking-tighter">Terminal Access</h2>
             </div>
+            <form onsubmit="autenticacion(event)" class="space-y-4 text-slate-900">
+                <input type="text" id="auth-user" placeholder="Operator ID"
+                    class="w-full p-4 bg-slate-100 border border-slate-200 outline-none font-mono text-sm rounded-sm">
+                <input type="password" placeholder="Passkey"
+                    class="w-full p-4 bg-slate-100 border border-slate-200 outline-none font-mono text-sm rounded-sm">
 
-            <form onsubmit="event.preventDefault()" class="space-y-4">
-                <input type="text" placeholder="Usuario" 
-                       class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:outline-none bg-gray-50">
-                
-                <input type="password" placeholder="Contraseña" 
-                       class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:outline-none bg-gray-50">
-
-                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg active:scale-[0.97] mt-4">
-                    Entrar
+                <button type="submit" id="auth-btn"
+                    class="w-full bg-[#003399] text-white py-4 font-black uppercase tracking-widest hover:bg-slate-900 transition rounded-sm active:scale-[0.98]">
+                    Establish Link
                 </button>
-            </form>
 
+                <p id="auth-status" class="hidden text-center text-red-600 text-[10px] font-black uppercase mt-2 tracking-wider">
+                    Error: Credenciales no reconocidas en el sistema
+                </p>
+            </form>
         </div>
-    </main>
+    </div>
+
+    <script>
+        // TU LÓGICA DE JAVASCRIPT (MANTENIDA)
+        
+        // Abrir login automáticamente al cargar
+        window.onload = openLogin;
+
+        function openLogin() {
+            const m = document.getElementById('login-modal');
+            m.style.display = 'flex';
+            // Pequeño delay para permitir que la transición CSS funcione
+            setTimeout(() => m.classList.add('active'), 10);
+        }
+
+        function closeLogin(e) {
+            // Solo cierra si se hace click directamente en el overlay gris
+            if (!e || e.target.id === 'login-modal') {
+                const m = document.getElementById('login-modal');
+                m.classList.remove('active');
+                // Espera a que termine la transición para ocultar el display
+                setTimeout(() => m.style.display = 'none', 300);
+            }
+        }
+
+        function autenticacion(e) {
+            e.preventDefault();
+            const b = document.getElementById('auth-btn');
+            const status = document.getElementById('auth-status');
+            b.textContent = "Verifying...";
+            
+            // Simulación de delay de red
+            setTimeout(() => {
+                status.classList.remove('hidden');
+                b.textContent = "Establish Link";
+            }, 1500);
+        }
+    </script>
 
 </body>
 </html>
