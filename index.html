@@ -3,45 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Imagen Completa</title>
+    <title>Login Responsive Dual Image</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-black overflow-hidden">
 
-    <!-- Contenedor de la Imagen -->
-    <!-- bg-black llena los huecos si la imagen no tiene la misma proporción que la pantalla -->
+    <!-- Contenedor de Imagen Inteligente -->
     <div class="fixed inset-0 -z-10 bg-black flex items-center justify-center">
-        <img src="pp.png" 
-             alt="Background" 
-             class="w-full h-full object-contain"> 
-             <!-- 'object-contain' garantiza que la imagen se vea íntegra siempre -->
+        <picture class="w-full h-full">
+            <!-- Imagen para Escritorio (Pantallas de más de 640px) -->
+            <source media="(min-width: 640px)" 
+                    srcset="pp.png">
+            
+            <!-- Imagen para Móvil (Pantallas pequeñas, formato vertical sugerido) -->
+            <img src="ppr.png" 
+                 alt="Background" 
+                 class="w-full h-full object-contain">
+        </picture>
     </div>
 
     <!-- Contenedor del Login -->
     <main class="min-h-screen w-full flex items-center justify-center p-4">
         
-        <!-- Caja de Login con un poco más de opacidad para asegurar legibilidad sobre cualquier fondo -->
         <div class="bg-white/95 backdrop-blur-sm w-full max-w-[90%] sm:max-w-md p-6 sm:p-10 rounded-3xl shadow-2xl border border-gray-200">
             
             <div class="text-center mb-8">
-                <h2 class="text-2xl sm:text-3xl font-black text-gray-800 tracking-tight">Acceso Privado</h2>
-                <p class="text-sm text-gray-500 mt-2">La imagen de fondo se muestra completa</p>
+                <h2 class="text-2xl sm:text-3xl font-black text-gray-800 tracking-tight">Acceso</h2>
+                <p class="text-sm text-gray-500 mt-2">Diferente imagen en móvil y PC</p>
             </div>
 
             <form onsubmit="event.preventDefault()" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Usuario</label>
-                    <input type="text" placeholder="admin" 
-                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none bg-gray-50">
-                </div>
+                <input type="text" placeholder="Usuario" 
+                       class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:outline-none bg-gray-50">
                 
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Contraseña</label>
-                    <input type="password" placeholder="••••••••" 
-                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none bg-gray-50">
-                </div>
+                <input type="password" placeholder="Contraseña" 
+                       class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:outline-none bg-gray-50">
 
-                <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg active:scale-[0.97] mt-4">
+                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg active:scale-[0.97] mt-4">
                     Entrar
                 </button>
             </form>
